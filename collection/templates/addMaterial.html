@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{%block content%}
+<div class="container-sm"><div>
+
+</div>
+{% for msg in messages%}
+    {{msg.message}}
+    {% endfor %}
+
+<div class="row ">
+	<div class="col-md-6 ">
+
+		<div class=" pt-3 row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            	<strong class="d-inline-block mb-2 text-success">Add your Material here</strong>
+
+			<form action="{% url 'material' %}" method="post">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    <input type="submit" value="add">
+		</form>
+
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="pt-3 pb-3 row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <form action="{% url 'searchmaterial' %}" method="post">
+	               {% csrf_token %}
+               Enter search string here:
+                <br/>
+                <input type="text" name="searchstring">
+	    <input type="submit" value="search">
+
+                <br/>
+                <br/>
+		</form>
+		</div>
+	</div>
+
+</div>
+  <!-- Content here -->
+
+<table class="table" >
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">metal</th>
+      <th scope="col">rate/grm</th>
+
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in MaterialObjects.all %}
+    <tr>
+
+      <td>{{ item.metal }}</td>
+      <td>{{ item.rate }}</td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+    </table>
+    </div>
+{% endblock %}

@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+{%block content%}
+<div class="container-sm"><div>
+
+</div>
+{% for msg in messages%}
+    {{msg.message}}
+    {% endfor %}
+
+<div class="row ">
+	<div class="col-md-6 ">
+
+		<div class=" pt-3 row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            	<strong class="d-inline-block mb-2 text-success">Add your Orders here</strong>
+
+			<form action="{% url 'order' %}" method="post">
+	    {% csrf_token %}
+	    {{ form.as_p }}
+	    <input type="submit" value="add">
+		</form>
+
+		</div>
+	</div>
+	<div class="col-md-6">
+		<div class="pt-3 pb-3 row no-gutters border rounded overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+            <form action="{% url 'searchorder' %}" method="post">
+	               {% csrf_token %}
+               Enter search string here:
+                <br/>
+                <input type="text" name="searchstring">
+	    <input type="submit" value="search">
+                <button><a href="{% url 'order' %}">ShowAll</a></button>
+                <br/>
+                <br/>
+		</form>
+		</div>
+	</div>
+
+</div>
+  <!-- Content here -->
+
+<table class="table" >
+  <thead class="thead-light">
+    <tr>
+      <th scope="col">Customer Name</th>
+      <th scope="col">Item</th>
+      <th scope="col">Metal</th>
+      <th scope="col">Price</th>
+      <th scope="col">Place</th>
+      <th scope="col">Order Date</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for item in orderobjects.all %}
+    <tr>
+      <td>{{ item.customername }}</td>
+      <td>
+          {% for itemname in item.item.all %}
+              {{ itemname }}<br/>
+          {% endfor %}
+          </td>
+      <td>{{ item.metal }}</td>
+      <td>{{ item.price }}</td>
+      <td>{{ item.place }}</td>
+      <td>{{ item.orderdate }}</td>
+
+    </tr>
+    {% endfor %}
+  </tbody>
+    </table>
+    </div>
+{% endblock %}
