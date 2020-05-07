@@ -20,7 +20,8 @@ def ItemSaveorUpdate(request):
         form.save()
     else:
         # item = Item.objects.get(pk=id)
-        form = ItemForm()
+        form = ItemForm()#select item form
+
     return render(request, 'addItem.html', {"form": form, 'itemobjects': Item.objects.all})
 
 
